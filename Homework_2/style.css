@@ -6,6 +6,8 @@
 span:hover {
     color: #FFFFFF;
     background-color:#9CD08F;
+    cursor: pointer;
+    transition: all 0.5s linear 0.1s;
 }
 .span-height-widh {
     color: #402E2A;
