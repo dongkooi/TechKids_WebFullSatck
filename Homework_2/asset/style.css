@@ -1,8 +1,15 @@
+.cv-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
 .avatar {
     height: 150px;
     width: 150px;
     border-radius: 50%;
 }
 .d-inline-block {
-    
+    display: inline-block;
+}
+.position {
+    justify-content: center;
 }

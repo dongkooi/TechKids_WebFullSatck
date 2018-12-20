@@ -1,0 +1,37 @@
+.cv-header {
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: bold
+}
+.avatar {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
+.d-inline-block {
+    display: inline-block;
+}
+.left {
+    display: inline-block;
+    width: 60%;
+    float: left;
+}
+.right {
+    display: inline-block;
+    width: 40%;
+    float: right;
+}
+.obj{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 3mm;
+    padding-right: 3mm;
+}
+.title {
+    color: #444;
+    border-left: 6px solid #7cc398;
+    padding: 0 8px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+}
