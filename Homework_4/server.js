@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static(__dirname + '/asset'));
+app.use(express.static('asset'));
 
 app.get('/about', (req, res) => {
     res.sendFile(__dirname + "/cvNgoTheDong.html")
