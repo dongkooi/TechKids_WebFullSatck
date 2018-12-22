@@ -23,10 +23,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/editTrueQuestion', (req, res) => {
-    let data = req.body.idQuestion;
+    let id = req.body.idQuestion;
     const questions = JSON.parse(fs.readFileSync("./questions.json", {encoding: "utf-8"}));
     questions.forEach((question) => {
-        if (question.id == data) {
+        if (question.id == id) {
             question.yes += 1;
         }
     });
@@ -35,10 +35,10 @@ app.post('/editTrueQuestion', (req, res) => {
 });
 
 app.post('/editFalseQuestion', (req, res) => {
-    let data = req.body.idQuestion;
+    let id = req.body.idQuestion;
     const questions = JSON.parse(fs.readFileSync("./questions.json", {encoding: "utf-8"}));
     questions.forEach((question) => {
-        if (question.id == data) {
+        if (question.id == id) {
             question.no += 1;
         }
     });
