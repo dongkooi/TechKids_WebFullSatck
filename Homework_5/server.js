@@ -10,40 +10,52 @@ app.get('/', (req, res) => {
     if(questions.length == 0) res.send("Chưa có câu hỏi nào!");
     else
     {
-        const randomQuestion = questions[Math.floor(Math.random()*questions.length)];
-        res.send(
-            `<h1>${randomQuestion.content}</h1>
-            <form action="/editTrueQuestion" method="POST">
-                <button type="submit" name="idQuestion" value="${randomQuestion.id}">Đúng/Có/Phải</button>
-            </form>
-            <form action="/editFalseQuestion" method="POST">
-                <button type="submit" name="idQuestion" value="${randomQuestion.id}">Sai/Không/Trái</button>
-            </form>`);
+        res.sendFile(__dirname + "/view/answer.html");
     }
 });
 
-app.post('/editTrueQuestion', (req, res) => {
-    let id = req.body.idQuestion;
+app.get('/api/random', (req, res) => {
+    const questions = JSON.parse(fs.readFileSync("./questions.json", {encoding: "utf-8"}));
+    const randomQuestion = questions[Math.floor(Math.random()*questions.length)];
+    res.send({question : randomQuestion});
+});
+app.get('/api/question/:questionId', (req, res) => {
+    let idQuestion = req.params.questionId;
     const questions = JSON.parse(fs.readFileSync("./questions.json", {encoding: "utf-8"}));
     questions.forEach((question) => {
-        if (question.id == id) {
-            question.yes += 1;
+        if (question.id == idQuestion) {
+            totalVote = question.yes + question.no;
+            if (totalVote == 0){
+                yesPercent = 50;
+                noPercent = 50;
+            } else {
+                yesPercent = ((question.yes*100)/totalVote).toFixed(2);
+                noPercent = 100 - yesPercent;
+            }
+            res.send({
+                questionContent: question.content,
+                totalVotes: totalVote,
+                yesPercents: yesPercent,
+                noPercents: noPercent
+            });
         }
-    });
-    fs.writeFileSync("./questions.json", JSON.stringify(questions));
-    res.redirect("/");
+    })
 });
 
-app.post('/editFalseQuestion', (req, res) => {
-    let id = req.body.idQuestion;
+app.get('/question/:questionId', (req, res) => {
+    res.sendFile(__dirname + "/view/question.html");
+});
+app.post('/vote/:id', (req, res) => {
+    let id = req.params.id;
+    let vote = req.body.vote;
     const questions = JSON.parse(fs.readFileSync("./questions.json", {encoding: "utf-8"}));
-    questions.forEach((question) => {
+    questions.forEach((question,index) => {
         if (question.id == id) {
-            question.no += 1;
+            questions[index][vote] += 1;
         }
     });
     fs.writeFileSync("./questions.json", JSON.stringify(questions));
-    res.redirect("/");
+    res.send();
 });
 
 app.get('/ask', (req, res) => {

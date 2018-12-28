@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Quyết đê</title>
 </head>
 <body>
-    
+    <h1 id="content"></h1>
+    <h3>Tổng số lượt vote: <span id="totalVote"></span></h3>
+    <h3>Đúng/Có/Phải: <span id="yesQuestion"></span></h3>
+    <h3>Sai/Không/Trái: <span id="noQuestion"></span></h3>
 </body>
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script>
+    var pageURL = window.location.href;
+    var questionId = pageURL.substr(pageURL.lastIndexOf('/') + 1);
+    $.ajax({
+        url: "http://localhost:6969/api/question/" + questionId,
+        type: "GET",
+        success: function(data) { 
+            $("#content").text(data.questionContent);
+            $("#totalVote").text(data.totalVotes);
+            $("#yesQuestion").text(data.yesPercents + "%" );
+            $("#noQuestion").text(data.noPercents + "%" )  
+        },
+        error: function(err) {
+            console.log("Error!!!", err);
+        }
+    })
+</script>
 </html>
